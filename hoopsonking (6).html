@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoops on King — Basketball Skills Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9A7A2E;
+    --gray: #1a1a1a;
+    --gray-mid: #2e2e2e;
+    --gray-light: #888;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    background: transparent;
+    transition: background 0.3s, backdrop-filter 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 10px 24px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 80px 48px;
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 22vw, 320px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 8px;
+  }
+  .hero-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 160px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+  .hero h1 .accent { color: var(--gold); }
+  .hero-sub {
+    font-family: 'Barlow', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--gray-light);
+    max-width: 460px;
+    margin-top: 24px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.6s forwards;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.8s forwards;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 16px 40px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--white);
+    border: 1px solid var(--gray-mid);
+    padding: 16px 40px;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 1.2s forwards;
+  }
+  .hero-scroll span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: var(--gold);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 30s linear infinite;
+    gap: 0;
+  }
+  .ticker-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 4px;
+    color: var(--black);
+    padding: 0 40px;
+  }
+  .ticker-dot {
+    color: var(--black);
+    opacity: 0.4;
+  }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  /* PILLARS */
+  .pillars {
+    background: var(--gray);
+    border-top: 1px solid var(--gray-mid);
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 64px;
+  }
+  .pillar {
+    padding: 48px 40px;
+    border-right: 1px solid var(--gray-mid);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .pillar:last-child { border-right: none; }
+  .pillar::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .pillar:hover::before { transform: scaleX(1); }
+  .pillar:hover { background: rgba(201,168,76,0.04); }
+  .pillar-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gray-mid);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .pillar h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .pillar p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--gray-light);
+    line-height: 1.7;
+  }
+
+  /* PROGRAMS */
+  .programs { background: var(--black); }
+  .programs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .program-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--gray-mid);
+  }
+  .program-card {
+    background: var(--black);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .program-card:hover { background: var(--gray); }
+  .program-card .card-season {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .program-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .program-card .dates {
+    font-size: 13px;
+    color: var(--gray-light);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .program-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .program-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-mid);
+    font-size: 13px;
+  }
+  .program-detail-row .label { color: var(--gray-light); font-weight: 300; }
+  .program-detail-row .value { color: var(--white); font-weight: 500; }
+  .program-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .program-price span {
+    font-size: 14px;
+    color: var(--gray-light);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  /* SCHEDULE TABLE */
+  .schedule { background: var(--gray); }
+  .schedule-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .schedule-block h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .schedule-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gray-mid);
+    gap: 16px;
+  }
+  .schedule-row:last-child { border-bottom: none; }
+  .schedule-group {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .schedule-time {
+    font-size: 13px;
+    color: var(--gray-light);
+    font-weight: 300;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* CURRICULUM */
+  .curriculum { background: var(--black); }
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray-mid);
+    margin-top: 64px;
+  }
+  .week-cell {
+    background: var(--black);
+    padding: 32px 28px;
+    transition: background 0.3s;
+  }
+  .week-cell:hover { background: var(--gray); }
+  .week-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gray-mid);
+    line-height: 1;
+    margin-bottom: 16px;
+    transition: -webkit-text-stroke-color 0.3s;
+  }
+  .week-cell:hover .week-num { -webkit-text-stroke-color: var(--gold-dark); }
+  .week-theme {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .week-desc {
+    font-size: 12px;
+    color: var(--gray-light);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  /* PRICING */
+  .pricing { background: var(--gray); }
+  .pricing-table {
+    margin-top: 64px;
+    border: 1px solid var(--gray-mid);
+  }
+  .pricing-head {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    background: var(--black);
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .pricing-head div {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    padding: 16px 24px;
+    border-right: 1px solid var(--gray-mid);
+  }
+  .pricing-head div:last-child { border-right: none; }
+  .pricing-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--gray-mid);
+    transition: background 0.2s;
+  }
+  .pricing-row:last-child { border-bottom: none; }
+  .pricing-row:hover { background: rgba(201,168,76,0.04); }
+  .pricing-row div {
+    padding: 20px 24px;
+    border-right: 1px solid var(--gray-mid);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  .pricing-row div:last-child { border-right: none; }
+  .pricing-row .prog-name {
+    font-weight: 600;
+    color: var(--white);
+    font-size: 15px;
+  }
+  .pricing-row .prog-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .pricing-note {
+    font-size: 13px;
+    color: var(--gray-light);
+    margin-top: 24px;
+    line-height: 1.6;
+  }
+  .founding-banner {
+    background: var(--gold);
+    padding: 24px 32px;
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .founding-banner p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+  .founding-banner span {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* CONDUCT */
+  .conduct { background: var(--black); }
+  .conduct-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 64px;
+  }
+  .conduct-block {
+    border-top: 2px solid var(--gold);
+    padding-top: 32px;
+  }
+  .conduct-block h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .conduct-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .conduct-list li {
+    font-size: 14px;
+    color: var(--gray-light);
+    font-weight: 300;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+  .conduct-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  /* LOCATION */
+  .location-section { background: var(--gray); }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 64px;
+  }
+  .location-info p {
+    font-size: 15px;
+    color: var(--gray-light);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .location-info .address-block {
+    border-left: 2px solid var(--gold);
+    padding-left: 24px;
+    margin: 32px 0;
+  }
+  .location-info .address-block p {
+    color: var(--white);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .map-placeholder {
+    background: var(--black);
+    border: 1px solid var(--gray-mid);
+    aspect-ratio: 4/3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .map-icon {
+    width: 40px; height: 40px;
+    border: 2px solid var(--gold);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    position: relative;
+  }
+  .map-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .map-placeholder p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .map-placeholder span {
+    font-size: 13px;
+    color: var(--gray-light);
+    font-weight: 300;
+  }
+
+  /* REGISTRATION */
+  .registration { background: var(--black); }
+  .reg-box {
+    border: 1px solid var(--gray-mid);
+    padding: 64px;
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .reg-docs h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .doc-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .doc-list li {
+    font-size: 14px;
+    color: var(--gray-light);
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .doc-check {
+    width: 18px; height: 18px;
+    border: 1px solid var(--gold);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .doc-check::after {
+    content: '✓';
+    color: var(--gold);
+    font-size: 10px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--gray);
+    border-top: 1px solid var(--gray-mid);
+    padding: 60px 48px 40px;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .footer-brand .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--white);
+  }
+  .footer-brand .logo span { color: var(--gold); }
+  .footer-brand p {
+    font-size: 13px;
+    color: var(--gray-light);
+    margin-top: 8px;
+    font-weight: 300;
+    max-width: 280px;
+    line-height: 1.6;
+  }
+  .footer-links h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    font-size: 13px;
+    color: var(--gray-light);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid var(--gray-mid);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-bottom p {
+    font-size: 12px;
+    color: var(--gray-light);
+    font-weight: 300;
+  }
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-social a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero { padding: 60px 24px; }
+    .hero h1 { font-size: 60px; }
+    .pillars-grid, .program-cards, .conduct-grid, .location-grid { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid var(--gray-mid); }
+    .schedule-grid { grid-template-columns: 1fr; }
+    .week-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-head, .pricing-row { grid-template-columns: 2fr 1fr 1fr; }
+    .pricing-head div:nth-child(4), .pricing-row div:nth-child(4) { display: none; }
+    .reg-box { grid-template-columns: 1fr; padding: 32px; gap: 32px; }
+    footer { padding: 40px 24px 32px; }
+    .programs-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">HOOPS <span>ON KING</span></a>
+  <ul class="nav-links">
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#curriculum">Training</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="javascript:void(0)" onclick="openModal()">Register</a></li>
+  </ul>
+  <a href="javascript:void(0)" onclick="openModal()" class="nav-cta">Enroll Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">HOK</div>
+  <div class="hero-tag">Newark, NJ — St. Benedict's Prep</div>
+  <h1>BUILT <span class="accent">FOR</span><br>THE NEXT<br>LEVEL.</h1>
+  <p class="hero-sub">Elite basketball skill development for Newark's youth. Where discipline meets excellence — on and off the court.</p>
+  <div class="hero-actions">
+    <a href="#programs" class="btn-primary">View Programs</a>
+    <a href="javascript:void(0)" onclick="openModal()" class="btn-outline">Register Now</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">DISCIPLINE</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">EXCELLENCE</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">COMMUNITY</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">ACCOUNTABILITY</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">NEWARK</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">ELITE TRAINING</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">DEVELOPMENT FIRST</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">DISCIPLINE</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">EXCELLENCE</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">COMMUNITY</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">ACCOUNTABILITY</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">NEWARK</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">ELITE TRAINING</span><span class="ticker-dot">◆</span>
+    <span class="ticker-item">DEVELOPMENT FIRST</span><span class="ticker-dot">◆</span>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section class="pillars" id="about">
+  <div class="section-label reveal">Our Philosophy</div>
+  <div class="section-title reveal">THREE<br>PILLARS.</div>
+  <div class="pillars-grid">
+    <div class="pillar reveal">
+      <div class="pillar-num">01</div>
+      <h3>Development First</h3>
+      <p>Winning is a byproduct of fundamentals. We train the habits, not just the outcomes. Every session is built to compound over time.</p>
+    </div>
+    <div class="pillar reveal reveal-delay-1">
+      <div class="pillar-num">02</div>
+      <h3>The Whole Athlete</h3>
+      <p>Basketball is the vehicle. Confidence, discipline, and leadership are the destination. We develop people, not just players.</p>
+    </div>
+    <div class="pillar reveal reveal-delay-2">
+      <div class="pillar-num">03</div>
+      <h3>Community Investment</h3>
+      <p>We are not just training players. We are investing in the future of Newark. Elite training — right here, at home.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="programs-header">
+    <div>
+      <div class="section-label reveal">What We Offer</div>
+      <div class="section-title reveal">THE<br>PROGRAMS.</div>
+    </div>
+    <a href="javascript:void(0)" onclick="openModal()" class="btn-primary reveal">Enroll Now</a>
+  </div>
+  <div class="program-cards">
+
+    <div class="program-card reveal">
+      <div class="card-season">☀ Summer 2026</div>
+      <h3>Basketball Camp</h3>
+      <p class="dates">Session 1: July 13–17 &nbsp;|&nbsp; Session 2: July 20–24</p>
+      <div class="program-detail">
+        <div class="program-detail-row">
+          <span class="label">Hours</span>
+          <span class="value">9:00am – 3:00pm</span>
+        </div>
+        <div class="program-detail-row">
+          <span class="label">Format</span>
+          <span class="value">Mon – Fri, Full Day</span>
+        </div>
+        <div class="program-detail-row">
+          <span class="label">Includes</span>
+          <span class="value">Skill work + competitive games</span>
+        </div>
+      </div>
+      <div class="program-price">$265<span>/week founding &nbsp;·&nbsp; $325 standard</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:24px;">
+        <a href="https://square.link/u/1JOqctYm" target="_blank" style="display:block;background:var(--gold);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);text-decoration:none;text-align:center;transition:background 0.2s;" onmouseover="this.style.background='#E8C97A'" onmouseout="this.style.background='var(--gold)'">⚡ Enroll — Session 1 Founding $265</a>
+        <a href="https://square.link/u/MZuz7Lu6" target="_blank" style="display:block;background:none;border:1px solid var(--gray-mid);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--white)'">Enroll — Session 1 Standard $325</a>
+        <a href="https://square.link/u/HPv16J7c" target="_blank" style="display:block;background:var(--gold);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);text-decoration:none;text-align:center;transition:background 0.2s;" onmouseover="this.style.background='#E8C97A'" onmouseout="this.style.background='var(--gold)'">⚡ Enroll — Session 2 Founding $265</a>
+        <a href="https://square.link/u/Fg2HtvbC" target="_blank" style="display:block;background:none;border:1px solid var(--gray-mid);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--white)'">Enroll — Session 2 Standard $325</a>
+        <a href="https://square.link/u/frv7yV8X" target="_blank" style="display:block;background:none;border:1px solid var(--gray-mid);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--white)'">Drop-In — Single Day $85</a>
+      </div>
+    </div>
+
+    <div class="program-card reveal reveal-delay-1">
+      <div class="card-season">🍂 Fall / 🌸 Spring</div>
+      <h3>Middle School Academy</h3>
+      <p class="dates">Grades 6–8 &nbsp;|&nbsp; Fall: Sept 7 – Oct 30, 2026</p>
+      <div class="program-detail">
+        <div class="program-detail-row">
+          <span class="label">Frequency</span>
+          <span class="value">3 sessions/week</span>
+        </div>
+        <div class="program-detail-row">
+          <span class="label">Cap</span>
+          <span class="value">48 athletes (2 groups of 24)</span>
+        </div>
+        <div class="program-detail-row">
+          <span class="label">Duration</span>
+          <span class="value">8 weeks per season</span>
+        </div>
+      </div>
+      <div class="program-price">$275<span>/month founding &nbsp;·&nbsp; $325 standard</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:24px;">
+        <a href="https://square.link/u/WwidiVKj" target="_blank" style="display:block;background:var(--gold);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);text-decoration:none;text-align:center;transition:background 0.2s;" onmouseover="this.style.background='#E8C97A'" onmouseout="this.style.background='var(--gold)'">⚡ Enroll — Founding Rate $275/mo</a>
+        <a href="https://square.link/u/Z62EMi0l" target="_blank" style="display:block;background:none;border:1px solid var(--gray-mid);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--white)'">Enroll — Standard Rate $325/mo</a>
+      </div>
+    </div>
+
+    <div class="program-card reveal reveal-delay-2">
+      <div class="card-season">🍂 Fall / 🌸 Spring</div>
+      <h3>Jr. Baller Academy</h3>
+      <p class="dates">Grades 3–5 &nbsp;|&nbsp; Fall: Sept 7 – Oct 30, 2026</p>
+      <div class="program-detail">
+        <div class="program-detail-row">
+          <span class="label">Frequency</span>
+          <span class="value">1 session/week</span>
+        </div>
+        <div class="program-detail-row">
+          <span class="label">Cap</span>
+          <span class="value">24 athletes</span>
+        </div>
+        <div class="program-detail-row">
+          <span class="label">Day</span>
+          <span class="value">Saturdays</span>
+        </div>
+      </div>
+      <div class="program-price">$85<span>/month founding &nbsp;·&nbsp; $100 standard</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:24px;">
+        <a href="https://square.link/u/aSu7Tqlx" target="_blank" style="display:block;background:var(--gold);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);text-decoration:none;text-align:center;transition:background 0.2s;" onmouseover="this.style.background='#E8C97A'" onmouseout="this.style.background='var(--gold)'">⚡ Enroll — Founding Rate $85/mo</a>
+        <a href="https://square.link/u/dDYioFWt" target="_blank" style="display:block;background:none;border:1px solid var(--gray-mid);padding:13px 20px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);text-decoration:none;text-align:center;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--white)'">Enroll — Standard Rate $100/mo</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="section-label reveal">When We Train</div>
+  <div class="section-title reveal">THE<br>SCHEDULE.</div>
+  <div class="schedule-grid">
+    <div class="schedule-block reveal">
+      <h3>Middle School Academy — Group A</h3>
+      <div class="schedule-row">
+        <span class="schedule-group">Monday / Wednesday</span>
+        <span class="schedule-time">7:30 – 8:30pm</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-group">Saturday</span>
+        <span class="schedule-time">9:00 – 10:00am</span>
+      </div>
+    </div>
+    <div class="schedule-block reveal reveal-delay-1">
+      <h3>Middle School Academy — Group B</h3>
+      <div class="schedule-row">
+        <span class="schedule-group">Tuesday / Thursday</span>
+        <span class="schedule-time">7:30 – 8:30pm</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-group">Saturday</span>
+        <span class="schedule-time">10:00 – 11:00am</span>
+      </div>
+    </div>
+    <div class="schedule-block reveal">
+      <h3>Jr. Baller Academy</h3>
+      <div class="schedule-row">
+        <span class="schedule-group">Saturday</span>
+        <span class="schedule-time">11:00am – 12:00pm</span>
+      </div>
+    </div>
+    <div class="schedule-block reveal reveal-delay-1">
+      <h3>Summer Camp</h3>
+      <div class="schedule-row">
+        <span class="schedule-group">Session 1</span>
+        <span class="schedule-time">July 13–17, 2026<br>9am – 3pm</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-group">Session 2</span>
+        <span class="schedule-time">July 20–24, 2026<br>9am – 3pm</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="curriculum" id="curriculum">
+  <div class="section-label reveal">8-Week Framework</div>
+  <div class="section-title reveal">THE<br>TRAINING.</div>
+  <div class="week-grid">
+    <div class="week-cell reveal">
+      <div class="week-num">01</div>
+      <div class="week-theme">Foundation & Evaluation</div>
+      <div class="week-desc">Footwork fundamentals, ball-handling baseline, athlete evaluation</div>
+    </div>
+    <div class="week-cell reveal reveal-delay-1">
+      <div class="week-num">02</div>
+      <div class="week-theme">Ball Handling & Attacking</div>
+      <div class="week-desc">Dribble combinations, change of direction, driving angles</div>
+    </div>
+    <div class="week-cell reveal reveal-delay-2">
+      <div class="week-num">03</div>
+      <div class="week-theme">Shooting Mechanics</div>
+      <div class="week-desc">Catch-and-shoot, off-the-dribble, shot off screens</div>
+    </div>
+    <div class="week-cell reveal reveal-delay-3">
+      <div class="week-num">04</div>
+      <div class="week-theme">Finishing at the Rim</div>
+      <div class="week-desc">Layup packages, contact finishing, floaters</div>
+    </div>
+    <div class="week-cell reveal">
+      <div class="week-num">05</div>
+      <div class="week-theme">Defense — On-Ball</div>
+      <div class="week-desc">Stance, positioning, lateral movement, forcing baseline</div>
+    </div>
+    <div class="week-cell reveal reveal-delay-1">
+      <div class="week-num">06</div>
+      <div class="week-theme">Defense — Off-Ball</div>
+      <div class="week-desc">Help-side positioning, rotations, weak-side awareness</div>
+    </div>
+    <div class="week-cell reveal reveal-delay-2">
+      <div class="week-num">07</div>
+      <div class="week-theme">Basketball IQ & Reads</div>
+      <div class="week-desc">Pick-and-roll reads, drive-and-kick, decision-making in live play</div>
+    </div>
+    <div class="week-cell reveal reveal-delay-3">
+      <div class="week-num">08</div>
+      <div class="week-theme">Competition & Evaluation</div>
+      <div class="week-desc">Full live play, end-of-session assessments, athlete progress review</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-label reveal">Investment</div>
+  <div class="section-title reveal">THE<br>PRICING.</div>
+  <div class="pricing-table reveal">
+    <div class="pricing-head">
+      <div>Program</div>
+      <div>Monthly</div>
+      <div>Weekly</div>
+      <div>Daily</div>
+    </div>
+    <div class="pricing-row">
+      <div class="prog-name">Summer Camp &nbsp;<small style="color:var(--gray-light);font-weight:300;font-size:12px;">Mon–Fri, 9am–3pm</small></div>
+      <div class="prog-price">—</div>
+      <div class="prog-price">$295</div>
+      <div class="prog-price">$75</div>
+    </div>
+    <div class="pricing-row">
+      <div class="prog-name">Middle School Academy &nbsp;<small style="color:var(--gray-light);font-weight:300;font-size:12px;">3 sessions/week</small></div>
+      <div class="prog-price">$325</div>
+      <div class="prog-price">$90</div>
+      <div class="prog-price">—</div>
+    </div>
+    <div class="pricing-row">
+      <div class="prog-name">Jr. Baller Academy &nbsp;<small style="color:var(--gray-light);font-weight:300;font-size:12px;">1 session/week</small></div>
+      <div class="prog-price">$100</div>
+      <div class="prog-price">$30</div>
+      <div class="prog-price">—</div>
+    </div>
+  </div>
+  <div class="founding-banner reveal">
+    <div>
+      <p>Founding Member Pricing — Limited Time <span>· Expires 10 days after registration opens</span></p>
+    </div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--black);">$275<span style="font-size:14px;font-family:'Barlow',sans-serif;">/mo</span></div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(0,0,0,0.5);">Middle School</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--black);">$85<span style="font-size:14px;font-family:'Barlow',sans-serif;">/mo</span></div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(0,0,0,0.5);">Jr. Baller</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--black);">$265<span style="font-size:14px;font-family:'Barlow',sans-serif;">/wk</span></div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(0,0,0,0.5);">Camp</div>
+      </div>
+    </div>
+  </div>
+  <p class="pricing-note reveal">15% sibling discount available on the second athlete's enrollment fee. Sibling discounts do not stack with Founding Member pricing. All pricing per athlete. Payment collected at registration through our secure online portal.</p>
+</section>
+
+<!-- CONDUCT -->
+<section class="conduct">
+  <div class="section-label reveal">Standards</div>
+  <div class="section-title reveal">THE<br>CODE.</div>
+  <div class="conduct-grid">
+    <div class="conduct-block reveal">
+      <h3>Athletes</h3>
+      <ul class="conduct-list">
+        <li>Arrive on time, ready to work every session</li>
+        <li>Respect coaches, teammates, and facility staff at all times</li>
+        <li>Give full effort — coachability is non-negotiable</li>
+        <li>No profanity, disrespectful language, or conduct that reflects poorly on the program</li>
+        <li>Academic performance matters — we are developing leaders, not just players</li>
+      </ul>
+    </div>
+    <div class="conduct-block reveal reveal-delay-1">
+      <h3>Parents & Guardians</h3>
+      <ul class="conduct-list">
+        <li>Support your athlete with encouragement, not pressure</li>
+        <li>Respect the coaching process — trust the program</li>
+        <li>Do not coach from the sidelines during sessions</li>
+        <li>Direct concerns to a coach privately, not during a session</li>
+        <li>Punctual pickup is required at the end of every session</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section" id="location">
+  <div class="section-label reveal">Find Us</div>
+  <div class="section-title reveal">THE<br>LOCATION.</div>
+  <div class="location-grid">
+    <div class="location-info reveal">
+      <p>All Hoops on King sessions are held at one of Newark's most iconic institutions — St. Benedict's Preparatory School. Arrive 10 minutes early for every session.</p>
+      <div class="address-block">
+        <p>St. Benedict's Preparatory School</p>
+        <p>520 Martin Luther King Blvd</p>
+        <p>Newark, NJ</p>
+        <p style="margin-top:8px;color:var(--gray-light);font-weight:300;">Entry: Gate on 145 William St.</p>
+      </div>
+      <p>Schedule changes, cancellations, and announcements communicated via email and posted on our social media. Ensure your contact information on file is current.</p>
+      <div style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="https://hoopsonking.com" class="btn-primary" style="display:inline-block;">hoopsonking.com</a>
+        <a href="https://instagram.com/hoopsonking" class="btn-outline" style="display:inline-block;">@hoopsonking</a>
+      </div>
+    </div>
+    <div class="map-placeholder reveal reveal-delay-1">
+      <div class="map-icon"></div>
+      <p>520 MLK Blvd</p>
+      <span>St. Benedict's Prep, Newark, NJ</span>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="registration" id="register">
+  <div class="section-label reveal">Get Started</div>
+  <div class="section-title reveal">READY TO<br>WORK?</div>
+  <div class="reg-box reveal">
+    <div>
+      <p style="font-size:17px;color:var(--gray-light);font-weight:300;line-height:1.8;margin-bottom:28px;">Registration is open for Summer Camp 2026, the Fall Training Season, and the Spring 2027 program. Founding Member pricing expires 10 days after registration opens — don't wait.</p>
+      <a href="https://hoopsonking.com" class="btn-primary" style="display:inline-block;margin-bottom:16px;">Register at hoopsonking.com</a>
+      <p style="font-size:13px;color:var(--gray-light);font-weight:300;margin-top:16px;">Questions? Reach out directly through the website or Instagram @hoopsonking</p>
+    </div>
+    <div class="reg-docs">
+      <h3>Required Documents</h3>
+      <ul class="doc-list">
+        <li><div class="doc-check"></div>Completed registration form</li>
+        <li><div class="doc-check"></div>Signed Liability Waiver</li>
+        <li><div class="doc-check"></div>Signed Medical Release Form</li>
+        <li><div class="doc-check"></div>Signed Media Release</li>
+        <li><div class="doc-check"></div>Parent/Guardian signature (under 18)</li>
+        <li><div class="doc-check"></div>Payment in full or plan confirmed</li>
+      </ul>
+      <p style="margin-top:24px;font-size:12px;color:var(--gray-light);font-weight:300;line-height:1.6;">Athletes without completed documentation will not be permitted to participate. No exceptions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">HOOPS <span>ON KING</span></div>
+      <p>Developing the next generation of basketball talent — on and off the court. Newark, NJ.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="#programs">Summer Camp</a></li>
+        <li><a href="#programs">Middle School Academy</a></li>
+        <li><a href="#programs">Jr. Baller Academy</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#curriculum">Training Curriculum</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="javascript:void(0)" onclick="openModal()">Register</a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="https://hoopsonking.com">hoopsonking.com</a></li>
+        <li><a href="https://instagram.com/hoopsonking">@hoopsonking</a></li>
+        <li><a href="#">520 MLK Blvd, Newark NJ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Hoops on King Basketball Skills Academy. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="https://instagram.com/hoopsonking">Instagram</a>
+      <a href="https://hoopsonking.com">Website</a>
+    </div>
+  </div>
+</footer>
+
+<!-- REGISTRATION MODAL -->
+<div id="regModal" style="
+  display:none;
+  position:fixed;inset:0;
+  z-index:1000;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+">
+  <div style="
+    background:var(--gray);
+    border:1px solid var(--gray-mid);
+    width:100%;
+    max-width:640px;
+    max-height:90vh;
+    overflow-y:auto;
+    position:relative;
+    animation:modalIn 0.35s cubic-bezier(0.16,1,0.3,1) forwards;
+  ">
+    <!-- Header -->
+    <div style="
+      background:var(--black);
+      padding:32px 40px 28px;
+      border-bottom:1px solid var(--gray-mid);
+      position:sticky;top:0;z-index:2;
+    ">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Hoops on King</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:1px;line-height:1;color:var(--white);">ENROLL NOW</div>
+        </div>
+        <button onclick="closeModal()" style="
+          background:none;border:1px solid var(--gray-mid);
+          color:var(--gray-light);font-size:20px;
+          width:40px;height:40px;cursor:pointer;
+          display:flex;align-items:center;justify-content:center;
+          transition:border-color 0.2s,color 0.2s;
+          font-family:'Barlow',sans-serif;
+        " onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+           onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--gray-light)'">✕</button>
+      </div>
+      <!-- Founding member notice -->
+      <div style="
+        background:var(--gold);
+        padding:10px 16px;
+        margin-top:20px;
+        display:flex;align-items:center;gap:10px;
+      ">
+        <span style="font-size:14px;">⚡</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--black);">Founding Member Pricing Active — Limited Spots</span>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div style="padding:40px;" id="formView">
+      <!-- Step indicator -->
+      <div style="display:flex;gap:0;margin-bottom:36px;border:1px solid var(--gray-mid);">
+        <div id="step1ind" style="flex:1;padding:10px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:var(--black);">01 Program</div>
+        <div id="step2ind" style="flex:1;padding:10px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);border-left:1px solid var(--gray-mid);">02 Athlete</div>
+        <div id="step3ind" style="flex:1;padding:10px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);border-left:1px solid var(--gray-mid);">03 Contact</div>
+      </div>
+
+      <!-- STEP 1: Program Selection -->
+      <div id="step1">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Select Your Program</div>
+        <div style="font-size:13px;color:var(--gray-light);font-weight:300;margin-bottom:20px;">Pick your program below — you'll complete athlete info then go straight to secure Square checkout.</div>
+
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray-light);margin-bottom:10px;">☀ Summer Camp 2026</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Summer Camp Session 1 — Founding Rate" data-url="https://square.link/u/1JOqctYm" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Session 1 — Founding Rate</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">July 13–17, 2026 · 9am–3pm</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);">$265<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/wk</span></div>
+              <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-family:'Barlow Condensed',sans-serif;">⚡ Founding</div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Summer Camp Session 1 — Standard Rate" data-url="https://square.link/u/MZuz7Lu6" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Session 1 — Standard Rate</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">July 13–17, 2026 · 9am–3pm</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--white);">$325<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/wk</span></div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Summer Camp Session 2 — Founding Rate" data-url="https://square.link/u/HPv16J7c" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Session 2 — Founding Rate</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">July 20–24, 2026 · 9am–3pm</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);">$265<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/wk</span></div>
+              <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-family:'Barlow Condensed',sans-serif;">⚡ Founding</div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Summer Camp Session 2 — Standard Rate" data-url="https://square.link/u/Fg2HtvbC" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Session 2 — Standard Rate</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">July 20–24, 2026 · 9am–3pm</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--white);">$325<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/wk</span></div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Summer Camp Daily Drop-In" data-url="https://square.link/u/frv7yV8X" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Daily Drop-In</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">Any single day · July 13–24 · 9am–3pm</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--white);">$85<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/day</span></div>
+            </div>
+          </label>
+        </div>
+
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray-light);margin-bottom:10px;">🍂 Fall Academy Programs 2026</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px;">
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Middle School Academy — Founding Rate" data-url="https://square.link/u/WwidiVKj" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Middle School Academy — Founding</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">Grades 6–8 · Sept 7–Oct 30 · 3x/week</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);">$275<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/mo</span></div>
+              <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-family:'Barlow Condensed',sans-serif;">⚡ Founding</div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Middle School Academy — Standard Rate" data-url="https://square.link/u/Z62EMi0l" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Middle School Academy — Standard</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">Grades 6–8 · Sept 7–Oct 30 · 3x/week</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--white);">$325<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/mo</span></div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Jr. Baller Academy — Founding Rate" data-url="https://square.link/u/aSu7Tqlx" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Jr. Baller Academy — Founding</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">Grades 3–5 · Sept 7–Oct 30 · Saturdays</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--gold);">$85<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/mo</span></div>
+              <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-family:'Barlow Condensed',sans-serif;">⚡ Founding</div>
+            </div>
+          </label>
+
+          <label class="prog-option" style="border:1px solid var(--gray-mid);padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color 0.2s,background 0.2s;">
+            <input type="radio" name="program" value="Jr. Baller Academy — Standard Rate" data-url="https://square.link/u/dDYioFWt" style="display:none;">
+            <div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Jr. Baller Academy — Standard</div>
+              <div style="font-size:12px;color:var(--gray-light);font-weight:300;margin-top:3px;">Grades 3–5 · Sept 7–Oct 30 · Saturdays</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--white);">$100<span style="font-size:12px;color:var(--gray-light);font-weight:300;">/mo</span></div>
+            </div>
+          </label>
+        </div>
+
+        <div id="step1err" style="display:none;font-size:12px;color:#e05;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;">Please select a program to continue</div>
+        <button onclick="goStep(2)" style="width:100%;background:var(--gold);border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--black);cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">Continue — Athlete Info →</button>
+      </div>
+
+      <!-- STEP 2: Athlete Info -->
+      <div id="step2" style="display:none;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Athlete Information</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">First Name *</div>
+            <input id="athleteFirst" type="text" placeholder="First name" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Last Name *</div>
+            <input id="athleteLast" type="text" placeholder="Last name" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Grade *</div>
+            <select id="athleteGrade" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;appearance:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+              <option value="" style="background:var(--black);">Select grade</option>
+              <option value="3rd" style="background:var(--black);">3rd Grade</option>
+              <option value="4th" style="background:var(--black);">4th Grade</option>
+              <option value="5th" style="background:var(--black);">5th Grade</option>
+              <option value="6th" style="background:var(--black);">6th Grade</option>
+              <option value="7th" style="background:var(--black);">7th Grade</option>
+              <option value="8th" style="background:var(--black);">8th Grade</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Age *</div>
+            <input id="athleteAge" type="number" placeholder="Age" min="6" max="18" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Shirt Size *</div>
+            <select id="shirtSize" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;appearance:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+              <option value="" style="background:var(--black);">Select size</option>
+              <option style="background:var(--black);">Youth S</option>
+              <option style="background:var(--black);">Youth M</option>
+              <option style="background:var(--black);">Youth L</option>
+              <option style="background:var(--black);">Youth XL</option>
+              <option style="background:var(--black);">Adult S</option>
+              <option style="background:var(--black);">Adult M</option>
+              <option style="background:var(--black);">Adult L</option>
+              <option style="background:var(--black);">Adult XL</option>
+              <option style="background:var(--black);">Adult XXL</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Shorts Size *</div>
+            <select id="shortsSize" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;appearance:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+              <option value="" style="background:var(--black);">Select size</option>
+              <option style="background:var(--black);">Youth S</option>
+              <option style="background:var(--black);">Youth M</option>
+              <option style="background:var(--black);">Youth L</option>
+              <option style="background:var(--black);">Youth XL</option>
+              <option style="background:var(--black);">Adult S</option>
+              <option style="background:var(--black);">Adult M</option>
+              <option style="background:var(--black);">Adult L</option>
+              <option style="background:var(--black);">Adult XL</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom:24px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Any medical conditions or allergies we should know about?</div>
+          <textarea id="medical" placeholder="None" rows="3" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:vertical;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'"></textarea>
+        </div>
+        <div id="step2err" style="display:none;font-size:12px;color:#e05;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;">Please fill in all required fields</div>
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+          <button onclick="goStep(1)" style="background:none;border:1px solid var(--gray-mid);padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--white)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--gray-light)'">← Back</button>
+          <button onclick="goStep(3)" style="background:var(--gold);border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--black);cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">Continue — Contact Info →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Contact Info -->
+      <div id="step3" style="display:none;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Parent / Guardian Contact</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">First Name *</div>
+            <input id="parentFirst" type="text" placeholder="First name" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+          </div>
+          <div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Last Name *</div>
+            <input id="parentLast" type="text" placeholder="Last name" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+          </div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Email Address *</div>
+          <input id="parentEmail" type="email" placeholder="email@example.com" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+        </div>
+        <div style="margin-bottom:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);margin-bottom:8px;">Phone Number *</div>
+          <input id="parentPhone" type="tel" placeholder="(555) 000-0000" style="width:100%;background:var(--black);border:1px solid var(--gray-mid);padding:14px 16px;color:var(--white);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--gray-mid)'">
+        </div>
+        <!-- Checkboxes -->
+        <div style="border:1px solid var(--gray-mid);padding:24px;margin-bottom:24px;display:flex;flex-direction:column;gap:14px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">Agreements Required</div>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+            <input type="checkbox" id="chkLiability" style="margin-top:3px;accent-color:var(--gold);width:16px;height:16px;">
+            <span style="font-size:13px;color:var(--gray-light);font-weight:300;line-height:1.5;">I agree to the <span style="color:var(--white);">Liability Waiver</span> and acknowledge all risks associated with athletic participation</span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+            <input type="checkbox" id="chkMedical" style="margin-top:3px;accent-color:var(--gold);width:16px;height:16px;">
+            <span style="font-size:13px;color:var(--gray-light);font-weight:300;line-height:1.5;">I authorize <span style="color:var(--white);">emergency medical treatment</span> if my athlete cannot be reached</span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+            <input type="checkbox" id="chkMedia" style="margin-top:3px;accent-color:var(--gold);width:16px;height:16px;">
+            <span style="font-size:13px;color:var(--gray-light);font-weight:300;line-height:1.5;">I consent to <span style="color:var(--white);">photo and video</span> of my athlete for Hoops on King media use</span>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;">
+            <input type="checkbox" id="chkConduct" style="margin-top:3px;accent-color:var(--gold);width:16px;height:16px;">
+            <span style="font-size:13px;color:var(--gray-light);font-weight:300;line-height:1.5;">I have read and agree to the <span style="color:var(--white);">Code of Conduct</span> for athletes and parents</span>
+          </label>
+        </div>
+        <div id="step3err" style="display:none;font-size:12px;color:#e05;margin-bottom:16px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;">Please complete all required fields and agreements</div>
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px;">
+          <button onclick="goStep(2)" style="background:none;border:1px solid var(--gray-mid);padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--white)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='var(--gray-mid)';this.style.color='var(--gray-light)'">← Back</button>
+          <button onclick="submitForm()" style="background:var(--gold);border:none;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--black);cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">Submit Registration ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success View -->
+    <div id="successView" style="display:none;padding:60px 40px;text-align:center;">
+      <div style="font-size:48px;margin-bottom:24px;">🏀</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;color:var(--white);margin-bottom:12px;">YOU'RE IN.</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Registration Received</div>
+      <p id="confirmMsg" style="font-size:15px;color:var(--gray-light);font-weight:300;line-height:1.8;margin-bottom:32px;max-width:440px;margin-left:auto;margin-right:auto;"></p>
+      <div style="border:1px solid var(--gray-mid);padding:24px;margin-bottom:32px;text-align:left;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Next Steps</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:var(--gray-light);font-weight:300;display:flex;gap:12px;"><span style="color:var(--gold);">01</span> Check your email for a confirmation and payment link</div>
+          <div style="font-size:13px;color:var(--gray-light);font-weight:300;display:flex;gap:12px;"><span style="color:var(--gold);">02</span> Complete payment to secure your spot</div>
+          <div style="font-size:13px;color:var(--gray-light);font-weight:300;display:flex;gap:12px;"><span style="color:var(--gold);">03</span> Follow <span style="color:var(--white);">@hoopsonking</span> on Instagram for updates</div>
+          <div style="font-size:13px;color:var(--gray-light);font-weight:300;display:flex;gap:12px;"><span style="color:var(--gold);">04</span> Arrive at St. Benedict's Prep — 145 William St gate — 10 min early</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+        <a id="squarePayBtn" href="#" target="_blank" style="background:var(--gold);padding:18px 48px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--black);text-decoration:none;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--gold-light)'" onmouseout="this.style.background='var(--gold)'">Complete Payment on Square →</a>
+        <button onclick="closeModal()" style="background:none;border:1px solid var(--gray-mid);padding:12px 32px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-light);cursor:pointer;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes modalIn {
+    from { opacity:0; transform:translateY(24px) scale(0.98); }
+    to { opacity:1; transform:translateY(0) scale(1); }
+  }
+  .prog-option:has(input:checked) {
+    border-color: var(--gold) !important;
+    background: rgba(201,168,76,0.06);
+  }
+  .prog-option:hover { border-color: var(--gray-light) !important; }
+  #regModal { display:none !important; }
+  #regModal.open { display:flex !important; }
+</style>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Modal
+  function openModal() {
+    var modal = document.getElementById('regModal');
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    document.body.style.overflow = 'hidden';
+    goStep(1);
+    document.getElementById('formView').style.display = 'block';
+    document.getElementById('successView').style.display = 'none';
+  }
+  function closeModal() {
+    document.getElementById('regModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('regModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Buttons use onclick="openModal()" directly
+
+  // Steps
+  function goStep(n) {
+    [1,2,3].forEach(i => {
+      document.getElementById('step'+i).style.display = i===n ? 'block' : 'none';
+      const ind = document.getElementById('step'+i+'ind');
+      if (i < n) {
+        ind.style.background = 'rgba(201,168,76,0.2)';
+        ind.style.color = 'var(--gold)';
+      } else if (i === n) {
+        ind.style.background = 'var(--gold)';
+        ind.style.color = 'var(--black)';
+      } else {
+        ind.style.background = 'transparent';
+        ind.style.color = 'var(--gray-light)';
+      }
+    });
+
+    if (n === 2) {
+      const sel = document.querySelector('input[name="program"]:checked');
+      if (!sel) { document.getElementById('step1err').style.display='block'; goStep(1); return; }
+      document.getElementById('step1err').style.display='none';
+    }
+    if (n === 3) {
+      const f = document.getElementById('athleteFirst').value;
+      const l = document.getElementById('athleteLast').value;
+      const g = document.getElementById('athleteGrade').value;
+      const a = document.getElementById('athleteAge').value;
+      const s = document.getElementById('shirtSize').value;
+      const sh = document.getElementById('shortsSize').value;
+      if (!f||!l||!g||!a||!s||!sh) { document.getElementById('step2err').style.display='block'; goStep(2); return; }
+      document.getElementById('step2err').style.display='none';
+    }
+  }
+
+  function submitForm() {
+    const pf = document.getElementById('parentFirst').value;
+    const pl = document.getElementById('parentLast').value;
+    const pe = document.getElementById('parentEmail').value;
+    const pp = document.getElementById('parentPhone').value;
+    const c1 = document.getElementById('chkLiability').checked;
+    const c2 = document.getElementById('chkMedical').checked;
+    const c4 = document.getElementById('chkConduct').checked;
+    if (!pf||!pl||!pe||!pp||!c1||!c2||!c4) {
+      document.getElementById('step3err').style.display='block'; return;
+    }
+    const selectedInput = document.querySelector('input[name="program"]:checked');
+    const prog = selectedInput.value;
+    const squareUrl = selectedInput.getAttribute('data-url');
+    const athlete = document.getElementById('athleteFirst').value + ' ' + document.getElementById('athleteLast').value;
+    document.getElementById('confirmMsg').textContent = `${athlete} is registered for ${prog}. Click below to complete payment through Square and lock in your spot.`;
+    document.getElementById('squarePayBtn').href = squareUrl;
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successView').style.display = 'block';
+  }
+</script>
+</body>
+</html>
