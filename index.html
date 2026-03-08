@@ -868,9 +868,9 @@
     <li><a href="#curriculum">Training</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#location">Location</a></li>
-    <li><a href="#register">Register</a></li>
+    <li><a href="javascript:void(0)" onclick="openModal()">Register</a></li>
   </ul>
-  <a href="#register" class="nav-cta">Enroll Now</a>
+  <a href="javascript:void(0)" onclick="openModal()" class="nav-cta">Enroll Now</a>
 </nav>
 
 <!-- HERO -->
@@ -881,7 +881,7 @@
   <p class="hero-sub">Elite basketball skill development for Newark's youth. Where discipline meets excellence — on and off the court.</p>
   <div class="hero-actions">
     <a href="#programs" class="btn-primary">View Programs</a>
-    <a href="#register" class="btn-outline">Register Now</a>
+    <a href="javascript:void(0)" onclick="openModal()" class="btn-outline">Register Now</a>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
@@ -939,7 +939,7 @@
       <div class="section-label reveal">What We Offer</div>
       <div class="section-title reveal">THE<br>PROGRAMS.</div>
     </div>
-    <a href="#register" class="btn-primary reveal">Enroll Now</a>
+    <a href="javascript:void(0)" onclick="openModal()" class="btn-primary reveal">Enroll Now</a>
   </div>
   <div class="program-cards">
 
@@ -1258,7 +1258,7 @@
         <li><a href="#curriculum">Training Curriculum</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#location">Location</a></li>
-        <li><a href="#register">Register</a></li>
+        <li><a href="javascript:void(0)" onclick="openModal()">Register</a></li>
       </ul>
     </div>
     <div class="footer-links">
@@ -1618,8 +1618,8 @@
     background: rgba(201,168,76,0.06);
   }
   .prog-option:hover { border-color: var(--gray-light) !important; }
-  #regModal { display:none; }
-  #regModal.open { display:flex; }
+  #regModal { display:none !important; }
+  #regModal.open { display:flex !important; }
 </style>
 
 <script>
@@ -1656,24 +1656,24 @@
 
   // Modal
   function openModal() {
-    document.getElementById('regModal').classList.add('open');
+    var modal = document.getElementById('regModal');
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
     document.body.style.overflow = 'hidden';
     goStep(1);
     document.getElementById('formView').style.display = 'block';
     document.getElementById('successView').style.display = 'none';
   }
   function closeModal() {
-    document.getElementById('regModal').classList.remove('open');
+    document.getElementById('regModal').style.display = 'none';
     document.body.style.overflow = '';
   }
   document.getElementById('regModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
 
-  // Wire all enroll buttons
-  document.querySelectorAll('a[href="#register"], a.nav-cta').forEach(el => {
-    el.addEventListener('click', e => { e.preventDefault(); openModal(); });
-  });
+  // Buttons use onclick="openModal()" directly
 
   // Steps
   function goStep(n) {
