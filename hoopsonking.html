@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoops on King — Basketball at St. Benedict's Prep</title>
+  <meta name="description" content="Gray Bee Basketball Camp & Hoops on King Academy at St. Benedict's Preparatory School, Newark, NJ.">
+  <meta property="og:title" content="Hoops on King — Basketball at St. Benedict's Prep">
+  <meta property="og:description" content="Elite basketball programming for boys and girls across Greater Essex County, NJ.">
+  <meta property="og:image" content="https://christophersimpson12-jpg.github.io/hoopsonking/hok-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --gold: #C9A84C;
+      --gray: #111111;
+      --gray-mid: #222222;
+      --gray-light: #888888;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--gray-mid);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 4px; color: var(--white); text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-tabs { display: flex; gap: 0; }
+    .nav-tab {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gray-light); text-decoration: none;
+      padding: 0 28px; height: 68px; display: flex; align-items: center;
+      border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s;
+      cursor: pointer; background: none; border-top: none; border-left: none; border-right: none;
+    }
+    .nav-tab:hover { color: var(--white); }
+    .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .nav-cta {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--black); background: var(--gold);
+      padding: 10px 24px; text-decoration: none; transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── PAGE SYSTEM ── */
+    .page { display: none; padding-top: 68px; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* ── HERO CAROUSEL ── */
+    .hero-carousel { position: relative; height: 100vh; overflow: hidden; }
+    .carousel-slides { display: flex; height: 100%; transition: transform 0.8s ease; }
+    .carousel-slide {
+      flex: 0 0 100%; height: 100%; position: relative;
+    }
+    .carousel-slide img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      filter: brightness(0.28);
+    }
+    .carousel-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 40px;
+    }
+    .hero-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(64px, 10vw, 120px);
+      color: var(--white); line-height: 0.9; letter-spacing: 4px; margin-bottom: 28px;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.7); font-weight: 300;
+      max-width: 560px; line-height: 1.8; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-gold {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--black); background: var(--gold); padding: 18px 48px;
+      text-decoration: none; transition: opacity 0.2s; cursor: pointer; border: none;
+    }
+    .btn-gold:hover { opacity: 0.85; }
+    .btn-outline {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 13px;
+      font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--white); background: none; border: 1px solid rgba(255,255,255,0.4);
+      padding: 18px 48px; text-decoration: none; transition: border-color 0.2s, color 0.2s; cursor: pointer;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    /* carousel dots */
+    .carousel-dots {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s;
+    }
+    .dot.active { background: var(--gold); }
+    .carousel-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(10,10,10,0.5); border: 1px solid var(--gray-mid);
+      color: var(--white); padding: 16px 20px; cursor: pointer; font-size: 18px;
+      transition: background 0.2s; z-index: 10;
+    }
+    .carousel-arrow:hover { background: var(--gold); color: var(--black); }
+    .carousel-arrow.left { left: 24px; }
+    .carousel-arrow.right { right: 24px; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 100px 48px; }
+    .section-inner { max-width: 1400px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 6vw, 72px);
+      color: var(--white); line-height: 0.95; letter-spacing: 2px; margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px; margin-bottom: 64px;
+      padding-bottom: 40px; border-bottom: 1px solid var(--gray-mid);
+    }
+    .divider { border: none; border-top: 1px solid var(--gray-mid); margin: 0; }
+
+    /* ── SESSION BUTTONS ── */
+    .session-btns {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--gray-mid); max-width: 900px; margin: 0 auto;
+    }
+    .session-btn {
+      background: var(--gray); padding: 48px 40px; text-align: center;
+      border: none; cursor: pointer; transition: background 0.2s;
+    }
+    .session-btn:hover { background: #1a1a1a; }
+    .session-btn .num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 14px;
+      letter-spacing: 3px; color: var(--gold); margin-bottom: 12px;
+    }
+    .session-btn .dates {
+      font-family: 'Bebas Neue', sans-serif; font-size: 36px;
+      color: var(--white); letter-spacing: 2px; margin-bottom: 8px;
+    }
+    .session-btn .info {
+      font-size: 13px; color: var(--gray-light); font-weight: 300; margin-bottom: 24px;
+    }
+    .session-btn .enroll-link {
+      display: inline-block; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--black); background: var(--gold); padding: 14px 36px;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .session-btn .enroll-link:hover { opacity: 0.85; }
+
+    /* ── TIMELINE ── */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 2px; background: var(--gray-mid);
+    }
+    .timeline-item { position: relative; margin-bottom: 36px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -36px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--gold); border: 2px solid var(--black);
+    }
+    .timeline-year {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 2px; color: var(--gold); margin-bottom: 4px;
+    }
+    .timeline-role {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 16px;
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--white); margin-bottom: 4px;
+    }
+    .timeline-org {
+      font-size: 13px; color: var(--gray-light); font-weight: 300;
+    }
+    .timeline-logo {
+      height: 28px; width: auto; object-fit: contain;
+      filter: brightness(0) invert(1); opacity: 0.6;
+      vertical-align: middle; margin-left: 10px;
+    }
+
+    /* ── PHOTO GRID ── */
+    .photo-grid-4 {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--gray-mid);
+    }
+    .photo-cell { position: relative; overflow: hidden; cursor: pointer; }
+    .photo-cell img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .photo-cell:hover img { transform: scale(1.04); }
+    .photo-cell .caption {
+      position: absolute; bottom: 16px; left: 16px;
+      font-family: 'Barlow Condensed', sans-serif; font-size: 10px;
+      font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── PROGRAM CARDS ── */
+    .program-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--gray-mid);
+    }
+    .program-card { background: var(--gray); padding: 56px 48px; }
+    .program-tag {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .program-name {
+      font-family: 'Bebas Neue', sans-serif; font-size: 42px;
+      color: var(--white); letter-spacing: 2px; margin-bottom: 8px;
+    }
+    .program-dates { font-size: 13px; color: var(--gray-light); margin-bottom: 24px; }
+    .program-desc {
+      font-size: 14px; color: var(--gray-light); font-weight: 300;
+      line-height: 1.8; margin-bottom: 32px;
+    }
+    .program-detail-row {
+      display: flex; justify-content: space-between;
+      border-bottom: 1px solid var(--gray-mid); padding-bottom: 10px; margin-bottom: 10px;
+    }
+    .program-detail-label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+    .program-detail-val { font-size: 13px; color: var(--white); }
+    .program-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+
+    /* ── CURRICULUM TOGGLE ── */
+    .curr-toggle-btn {
+      width: 100%; background: none; border: none;
+      padding: 28px 40px; display: flex; align-items: center;
+      justify-content: space-between; cursor: pointer;
+    }
+    .curr-body { display: none; padding: 0 40px 40px; border-top: 1px solid var(--gray-mid); }
+    .curr-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1px; background: var(--gray-mid); margin-top: 32px;
+    }
+    .curr-cell { background: var(--black); padding: 28px 24px; }
+    .curr-week { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); margin-bottom: 8px; }
+    .curr-title {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 14px;
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--white); margin-bottom: 10px;
+    }
+    .curr-desc { font-size: 12px; color: var(--gray-light); line-height: 1.7; }
+
+    /* ── HOW TO ENROLL ── */
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1px; background: var(--gray-mid);
+    }
+    .step-cell { background: var(--black); padding: 28px 24px; }
+    .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--gold); line-height: 1; margin-bottom: 12px; }
+    .step-title { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 8px; }
+    .step-desc { font-size: 13px; color: var(--gray-light); font-weight: 300; line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--gray-mid);
+    }
+    .contact-cell { background: var(--gray); padding: 56px 48px; }
+    .contact-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .contact-val { font-size: 15px; color: var(--white); font-weight: 300; line-height: 1.8; }
+
+    /* ── PHOTO BANNER ── */
+    .photo-banner { position: relative; height: 420px; overflow: hidden; }
+    .photo-banner img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.2); }
+    .photo-banner-text {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px,7vw,90px);
+      color: var(--white); letter-spacing: 8px; text-align: center; line-height: 1;
+    }
+    .photo-banner-text span { color: var(--gold); }
+
+    /* ── ENROLL BAR ── */
+    .enroll-bar {
+      background: var(--black); border: 1px solid var(--gray-mid);
+      border-top: 2px solid var(--gold); padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+
+    /* ── MAP ── */
+    .map-wrap { position: relative; }
+    .map-wrap iframe { display: block; width: 100%; height: 480px; border: none; filter: grayscale(80%) brightness(0.6); }
+
+    /* ── CREDENTIAL PILLS ── */
+    .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .pill {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); border: 1px solid rgba(201,168,76,0.35); padding: 7px 16px;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.93); z-index: 10000;
+      overflow-y: auto; padding: 40px 24px;
+    }
+    .modal-box {
+      max-width: 800px; margin: 0 auto;
+      background: var(--gray); border: 1px solid var(--gray-mid);
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 36px; border-bottom: 1px solid var(--gray-mid);
+    }
+    .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--white); letter-spacing: 2px; }
+    .modal-close { background: none; border: none; color: var(--gray-light); font-size: 28px; cursor: pointer; line-height: 1; }
+    .modal-body { padding: 36px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--gray); border-top: 1px solid var(--gray-mid);
+      padding: 48px; display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 24px;
+    }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 4px; color: var(--white); }
+    .footer-logo span { color: var(--gold); }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-link { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-light); text-decoration: none; cursor: pointer; }
+    .footer-link:hover { color: var(--gold); }
+    .footer-copy { font-size: 12px; color: var(--gray-light); font-weight: 300; }
+
+    /* ── FLOATING BTN ── */
+    .float-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 900;
+      background: var(--gold); color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 14px 24px; text-decoration: none; transition: opacity 0.2s;
+    }
+    .float-btn:hover { opacity: 0.85; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-tabs { display: none; }
+      .section { padding: 60px 24px; }
+      .program-grid, .contact-grid, .steps-grid, .curr-grid, .photo-grid-4 { grid-template-columns: 1fr; }
+      .session-btns { grid-template-columns: 1fr; }
+      .hero-title { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('graybees')"><span>HOK</span> · Hoops on King</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('graybees')" id="tab-graybees">Gray Bee Basketball Camp</button>
+    <button class="nav-tab" onclick="showPage('hok')" id="tab-hok">Hoops on King Academy</button>
+    <button class="nav-tab" onclick="showPage('contact')" id="tab-contact">Contact Us</button>
+  </div>
+  <a href="https://form.jotform.com/260665942610054" target="_blank" class="nav-cta">Register Now</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — GRAY BEE BASKETBALL CAMP
+═══════════════════════════════════════════ -->
+<div class="page active" id="page-graybees">
+
+  <!-- HERO CAROUSEL -->
+  <div class="hero-carousel">
+    <button class="carousel-arrow left" onclick="slideHero(-1)">&#8592;</button>
+    <button class="carousel-arrow right" onclick="slideHero(1)">&#8594;</button>
+    <div class="carousel-slides" id="hero-slides">
+      <div class="carousel-slide">
+        <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9153.jpg" alt="Gray Bees">
+        <div class="carousel-overlay">
+          <div class="hero-label">St. Benedict's Preparatory School · Newark, NJ</div>
+          <div class="hero-title">Gray Bee<br><span>Hoops Camp.</span></div>
+          <div class="hero-sub">An elite week-long basketball camp experience hosted at The Hive — open to boys and girls across Greater Essex County.</div>
+          <div class="hero-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now</a>
+            <button class="btn-outline" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">View Sessions</button>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9154.jpg" alt="Gray Bees">
+        <div class="carousel-overlay">
+          <div class="hero-label">St. Benedict's Preparatory School · Newark, NJ</div>
+          <div class="hero-title">Gray Bee<br><span>Hoops Camp.</span></div>
+          <div class="hero-sub">Train where champions train. Learn from a coaching staff with NBA, D1, and championship experience.</div>
+          <div class="hero-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now</a>
+            <button class="btn-outline" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">View Sessions</button>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9156.jpg" alt="Gray Bees">
+        <div class="carousel-overlay">
+          <div class="hero-label">St. Benedict's Preparatory School · Newark, NJ</div>
+          <div class="hero-title">Gray Bee<br><span>Hoops Camp.</span></div>
+          <div class="hero-sub">Skill work, team competition, and character development — all in one week.</div>
+          <div class="hero-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now</a>
+            <button class="btn-outline" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">View Sessions</button>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9127.jpg" alt="Gray Bees">
+        <div class="carousel-overlay">
+          <div class="hero-label">St. Benedict's Preparatory School · Newark, NJ</div>
+          <div class="hero-title">Gray Bee<br><span>Hoops Camp.</span></div>
+          <div class="hero-sub">Brotherhood. Accountability. Next level basketball.</div>
+          <div class="hero-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now</a>
+            <button class="btn-outline" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">View Sessions</button>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9152.jpg" alt="Gray Bees">
+        <div class="carousel-overlay">
+          <div class="hero-label">St. Benedict's Preparatory School · Newark, NJ</div>
+          <div class="hero-title">Gray Bee<br><span>Hoops Camp.</span></div>
+          <div class="hero-sub">Summer 2026 — Sessions forming now. Limited spots available.</div>
+          <div class="hero-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now</a>
+            <button class="btn-outline" onclick="document.getElementById('sessions').scrollIntoView({behavior:'smooth'})">View Sessions</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-dots" id="hero-dots">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+      <div class="dot" onclick="goToSlide(3)"></div>
+      <div class="dot" onclick="goToSlide(4)"></div>
+    </div>
+  </div>
+
+  <!-- SESSION ENROLL BUTTONS -->
+  <section class="section" id="sessions" style="background:var(--black);">
+    <div class="section-inner">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="section-label" style="justify-content:center;display:block;">Summer 2026</div>
+        <div class="section-title" style="margin-bottom:12px;">Choose Your Session.</div>
+        <div style="font-size:14px;color:var(--gray-light);font-weight:300;">Monday – Friday · 9:00am – 3:00pm · St. Benedict's Prep, Newark NJ · Boys &amp; Girls · Ages 8–18</div>
+      </div>
+      <div class="session-btns">
+        <div class="session-btn">
+          <div class="num">Session 01</div>
+          <div class="dates">July 13–17</div>
+          <div class="info">Mon – Fri · 9:00am – 3:00pm · 2026</div>
+          <a href="https://square.link/u/MZuz7Lu6" target="_blank" class="enroll-link">Enroll — Session 1 →</a>
+        </div>
+        <div class="session-btn">
+          <div class="num">Session 02</div>
+          <div class="dates">July 20–24</div>
+          <div class="info">Mon – Fri · 9:00am – 3:00pm · 2026</div>
+          <a href="https://square.link/u/zhDm8WAE" target="_blank" class="enroll-link">Enroll — Session 2 →</a>
+        </div>
+      </div>
+      <div style="margin-top:1px;">
+        <div class="session-btn" style="background:var(--gray);text-align:center;padding:32px 40px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--gray-light);font-weight:300;">Daily Drop-In available · </span>
+          <a href="https://square.link/u/frv7yV8X" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;">$85/day — Register Here →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BANNER -->
+  <div class="photo-banner">
+    <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9087.jpeg" alt="">
+    <div class="photo-banner-text">THE HIVE.<br><span>WHERE COACHES ARE MADE.</span></div>
+  </div>
+
+  <!-- PROGRAM DIRECTOR -->
+  <section class="section" style="background:var(--black);" id="director">
+    <div class="section-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Meet The Coach</div>
+          <div class="section-title">Program<br>Director.</div>
+        </div>
+        <div style="max-width:420px;text-align:right;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white);">Chris Simpson <span style="color:var(--gold);">'10</span></div>
+          <div style="font-size:14px;color:var(--gray-light);font-weight:300;margin-top:6px;line-height:1.7;">Head Basketball Coach, St. Benedict's Prep · Founder, Hoops on King</div>
+        </div>
+      </div>
+
+      <!-- Hero photo + bio -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gray-mid);margin-bottom:1px;">
+        <!-- Timeout photo — headline -->
+        <div style="position:relative;height:560px;overflow:hidden;">
+          <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_8785.jpeg" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,10,10,0.2) 0%,transparent 60%);"></div>
+          <div style="position:absolute;bottom:24px;left:28px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">Timeout</div>
+        </div>
+        <!-- Bio -->
+        <div style="background:var(--gray);padding:52px 48px;display:flex;flex-direction:column;justify-content:center;">
+          <div class="section-label">Background</div>
+          <p style="font-size:15px;color:var(--white);font-weight:300;line-height:1.8;margin-bottom:18px;">A St. Benedict's Prep Class of '10 alumnus, Chris Simpson has spent over 15 years building one of the most well-rounded coaching resumes in the country — from the NBA to collegiate programs to elite high school basketball.</p>
+          <p style="font-size:14px;color:var(--gray-light);font-weight:300;line-height:1.8;margin-bottom:18px;">Coach Simpson began at The Hive as a student manager under Dan Hurley. He went on to manage at St. John's under Steve Lavin, interned with the Brooklyn Nets under Jason Kidd during the NBA Playoffs, and built his coaching career at IMG Academy, Wagner College, Loyola Marymount, and Dymally High School — where he won the 2020 LA City Championship and was named CIF Coach of the Year.</p>
+          <p style="font-size:14px;color:var(--gray-light);font-weight:300;line-height:1.8;margin-bottom:28px;">Most recently, Coach Simpson served as Assistant Coach and Director of Scouting &amp; Video at the University of San Diego under Steve Lavin. He holds a Master's in School Counseling from Loyola Marymount University.</p>
+          <div class="pills">
+            <div class="pill">SBP '10 · Dan Hurley</div>
+            <div class="pill">Brooklyn Nets · NBA</div>
+            <div class="pill">2020 CIF Coach of the Year</div>
+            <div class="pill">M.A. · Loyola Marymount</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 action photos -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-mid);margin-bottom:64px;">
+        <div class="photo-cell" style="height:300px;">
+          <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9114.jpeg" style="object-position:center 20%;">
+          <div style="position:absolute;inset:0;background:rgba(10,10,10,0.25);"></div>
+          <div class="caption">In The Zone</div>
+        </div>
+        <div class="photo-cell" style="height:300px;">
+          <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9116.jpeg" style="object-position:center 25%;">
+          <div style="position:absolute;inset:0;background:rgba(10,10,10,0.25);"></div>
+          <div class="caption">Huddle Up</div>
+        </div>
+        <div class="photo-cell" style="height:300px;">
+          <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9122.jpeg" style="object-position:center 20%;">
+          <div style="position:absolute;inset:0;background:rgba(10,10,10,0.25);"></div>
+          <div class="caption">Sideline</div>
+        </div>
+      </div>
+
+      <!-- Career Timeline -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;">
+        <div>
+          <div class="section-label" style="margin-bottom:32px;">Coaching Career</div>
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-year">2024 – Present</div>
+              <div class="timeline-role">Assistant Coach
+                <img src="https://christophersimpson12-jpg.github.io/hoopsonking/San_Diego_Toreros_logo_svg.png" class="timeline-logo" alt="USD">
+              </div>
+              <div class="timeline-org">University of San Diego · Men's Basketball</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2022 – 2024</div>
+              <div class="timeline-role">Director of Scouting &amp; Video
+                <img src="https://christophersimpson12-jpg.github.io/hoopsonking/San_Diego_Toreros_logo_svg.png" class="timeline-logo" alt="USD">
+              </div>
+              <div class="timeline-org">University of San Diego · Men's Basketball</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2019 – 2021</div>
+              <div class="timeline-role">Head Varsity Coach · CIF Coach of the Year</div>
+              <div class="timeline-org">Dymally High School · LA City Champions 2020</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2015 – 2017</div>
+              <div class="timeline-role">Graduate Assistant Coach
+                <img src="https://christophersimpson12-jpg.github.io/hoopsonking/lmu-athletics-mark.png" class="timeline-logo" alt="LMU">
+              </div>
+              <div class="timeline-org">Loyola Marymount University · Men's Basketball</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2015</div>
+              <div class="timeline-role">Player Development Coach</div>
+              <div class="timeline-org">IMG Academy · Bradenton, FL</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2014 – 2015</div>
+              <div class="timeline-role">Director of Basketball Operations
+                <img src="https://christophersimpson12-jpg.github.io/hoopsonking/wagner_logo.png" class="timeline-logo" alt="Wagner">
+              </div>
+              <div class="timeline-org">Wagner College · Men's Basketball</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2013</div>
+              <div class="timeline-role">Video Coordinator Intern
+                <img src="https://christophersimpson12-jpg.github.io/hoopsonking/Brooklyn-Nets-Logo.png" class="timeline-logo" alt="Brooklyn Nets">
+              </div>
+              <div class="timeline-org">Brooklyn Nets · NBA · Under Jason Kidd</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2010 – 2014</div>
+              <div class="timeline-role">Head Video Manager
+                <img src="https://christophersimpson12-jpg.github.io/hoopsonking/St_-Johns-Red-Storm-logo.jpg" class="timeline-logo" alt="St John's">
+              </div>
+              <div class="timeline-org">St. John's University · Under Steve Lavin</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-year">2006 – 2010</div>
+              <div class="timeline-role">Student Manager — The Beginning</div>
+              <div class="timeline-org">St. Benedict's Prep · Under Dan Hurley</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Education + Photo -->
+        <div>
+          <div class="section-label" style="margin-bottom:32px;">Education</div>
+          <div style="display:flex;flex-direction:column;gap:1px;background:var(--gray-mid);margin-bottom:40px;">
+            <div style="background:var(--gray);padding:28px 32px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:4px;">University of San Diego</div>
+              <div style="font-size:13px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:2px;">Certificate of Coaching Today's Student Athlete · 2024</div>
+            </div>
+            <div style="background:var(--gray);padding:28px 32px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:4px;">Loyola Marymount University</div>
+              <div style="font-size:13px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:2px;">M.A. School Counseling – PPS Credential · 2018</div>
+            </div>
+            <div style="background:var(--gray);padding:28px 32px;">
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);letter-spacing:1px;margin-bottom:4px;">St. John's University</div>
+              <div style="font-size:13px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:2px;">B.S. Sports Management · 2014</div>
+            </div>
+          </div>
+
+          <!-- 4th coaching photo -->
+          <div class="photo-cell" style="height:260px;">
+            <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9120.jpeg" style="object-position:center 15%;">
+            <div style="position:absolute;inset:0;background:rgba(10,10,10,0.3);"></div>
+            <div class="caption">Game Time</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REGISTER + LOCATION -->
+  <section class="section" style="background:var(--gray);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Secure Your Spot</div>
+          <div class="section-title">Register<br>Today.</div>
+        </div>
+        <div style="max-width:400px;text-align:right;">
+          <p style="font-size:14px;color:var(--gray-light);font-weight:300;line-height:1.8;">Spots are limited. Complete the registration form and secure your session. Use code <strong style="color:var(--white);">HOK</strong> at Square checkout.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:64px;">
+        <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Complete Registration Form</a>
+        <a href="https://square.link/u/MZuz7Lu6" target="_blank" class="btn-outline">Enroll — Session 1 July 13–17</a>
+        <a href="https://square.link/u/zhDm8WAE" target="_blank" class="btn-outline">Enroll — Session 2 July 20–24</a>
+      </div>
+
+      <hr class="divider" style="margin-bottom:64px;">
+
+      <!-- Location -->
+      <div class="section-header" style="margin-bottom:32px;">
+        <div>
+          <div class="section-label">Where We Train</div>
+          <div class="section-title">The Hive.</div>
+        </div>
+        <div style="max-width:400px;text-align:right;">
+          <div style="font-size:15px;color:var(--white);font-weight:300;line-height:1.8;">St. Benedict's Preparatory School<br>520 Martin Luther King Blvd<br>Newark, NJ 07102<br><span style="font-size:13px;color:var(--gray-light);">Entry via 145 William St Gate</span></div>
+          <a href="https://maps.google.com/?q=St.+Benedict's+Preparatory+School+Newark+NJ" target="_blank" style="display:inline-block;margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);padding-bottom:2px;">Get Directions →</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.312!2d-74.17499!3d40.74304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2531dadc1bb41%3A0x7ae5988ba7f74de3!2sSt.%20Benedict's%20Preparatory%20School!5e0!3m2!1sen!2sus!4v1741000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+        <div style="position:absolute;top:20px;right:20px;background:var(--gold);padding:4px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);">📍 The Hive</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-graybees -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — HOOPS ON KING ACADEMY
+═══════════════════════════════════════════ -->
+<div class="page" id="page-hok">
+
+  <!-- HOK Hero banner -->
+  <div class="photo-banner" style="height:520px;">
+    <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9026.jpeg" style="filter:brightness(0.18);" alt="">
+    <div class="photo-banner-text" style="flex-direction:column;gap:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);">Year-Round Development</div>
+      <div>Hoops on King<br><span>Academy.</span></div>
+      <div style="font-family:'Barlow',sans-serif;font-size:15px;color:rgba(255,255,255,0.65);font-weight:300;max-width:520px;text-align:center;line-height:1.8;">After-school and weekend basketball programming to keep boys and girls involved year-round in skill development.</div>
+    </div>
+  </div>
+
+  <!-- HOW TO ENROLL -->
+  <section class="section" style="background:var(--black);">
+    <div class="section-inner">
+      <div style="margin-bottom:32px;">
+        <div class="section-label">Getting Started</div>
+        <div class="section-title" style="margin-bottom:8px;">How To Enroll.</div>
+        <div style="font-size:13px;color:var(--gray-light);font-weight:300;">Open to boys and girls — complete these steps in order to secure your spot.</div>
+      </div>
+      <div class="steps-grid">
+        <div class="step-cell">
+          <div class="step-num">01</div>
+          <div class="step-title">Choose Program</div>
+          <div class="step-desc">Browse below and pick the program that fits your athlete — boys and girls welcome at all levels.</div>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">02</div>
+          <div class="step-title">Fill Out Registration</div>
+          <div class="step-desc">Complete athlete and parent info, waivers and agreements before enrolling.</div>
+          <a href="https://form.jotform.com/260665942610054" target="_blank" style="display:inline-block;margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);">Start Form →</a>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">03</div>
+          <div class="step-title">Complete Payment</div>
+          <div class="step-desc">Click Enroll on your program below and pay securely via Square. Use code <strong style="color:var(--white);">HOK</strong> at checkout.</div>
+        </div>
+        <div class="step-cell">
+          <div class="step-num">04</div>
+          <div class="step-title">You're In</div>
+          <div class="step-desc">Confirmation sent within 24 hours. Show up early, work hard, get better.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="section" style="background:var(--gray);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">What We Offer</div>
+          <div class="section-title">The Programs.</div>
+        </div>
+        <div style="max-width:420px;text-align:right;">
+          <p style="font-size:14px;color:var(--gray-light);font-weight:300;line-height:1.8;">Structured, coach-led programming across two age groups — designed to develop players every season, not just in the summer.</p>
+        </div>
+      </div>
+      <div class="program-grid">
+
+        <!-- MSA -->
+        <div class="program-card">
+          <div class="program-tag">After-School · Boys &amp; Girls</div>
+          <div class="program-name">Middle School Academy</div>
+          <div class="program-dates">Grades 6–8 · Fall: Sept 7 – Oct 30, 2026 · Spring: Apr 5 – May 28, 2027</div>
+          <p class="program-desc">Structured after-school training sessions combining skill development, team concepts, and competitive play. Athletes train with purpose — every rep tied to a system and a standard.</p>
+          <div class="program-detail-row"><span class="program-detail-label">Group A</span><span class="program-detail-val">Mon/Wed 7:30–8:30pm + Sat 9–10am</span></div>
+          <div class="program-detail-row"><span class="program-detail-label">Group B</span><span class="program-detail-val">Tue/Thu 7:30–8:30pm + Sat 10–11am</span></div>
+          <div class="program-detail-row"><span class="program-detail-label">Duration</span><span class="program-detail-val">8 Weeks per Season</span></div>
+          <div class="program-detail-row" style="border-bottom:none;"><span class="program-detail-label">Capacity</span><span class="program-detail-val">48 athletes (2 groups of 24)</span></div>
+          <div class="program-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now →</a>
+            <a href="https://form.jotform.com/260661435793059" target="_blank" class="btn-outline">Learn More →</a>
+          </div>
+        </div>
+
+        <!-- JBA -->
+        <div class="program-card">
+          <div class="program-tag">Weekend · Boys &amp; Girls</div>
+          <div class="program-name">Jr. Baller Academy</div>
+          <div class="program-dates">Grades 3–5 · Fall: Sept 7 – Oct 30, 2026 · Spring: Apr 5 – May 28, 2027</div>
+          <p class="program-desc">Weekend skill development built for younger athletes ready to take their game seriously. Fundamentals-first coaching in a fun, structured environment that builds confidence and love for the game.</p>
+          <div class="program-detail-row"><span class="program-detail-label">Schedule</span><span class="program-detail-val">Saturday 11:00am – 12:00pm</span></div>
+          <div class="program-detail-row"><span class="program-detail-label">Duration</span><span class="program-detail-val">8 Weeks per Season</span></div>
+          <div class="program-detail-row" style="border-bottom:none;"><span class="program-detail-label">Capacity</span><span class="program-detail-val">24 athletes</span></div>
+          <div class="program-btns">
+            <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-gold">Enroll Now →</a>
+            <a href="https://form.jotform.com/260661435793059" target="_blank" class="btn-outline">Learn More →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 8-Week Curriculum -->
+      <div style="margin-top:1px;background:var(--black);border:1px solid var(--gray-mid);">
+        <button class="curr-toggle-btn" onclick="toggleCurr()">
+          <div style="display:flex;align-items:center;gap:20px;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);letter-spacing:2px;">8-Week Programming Structure</div>
+            <div style="font-size:12px;color:var(--gray-light);font-weight:300;">Click to expand</div>
+          </div>
+          <div id="curr-arrow" style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);transition:transform 0.3s;">▼</div>
+        </button>
+        <div class="curr-body" id="curr-body">
+          <div class="curr-grid">
+            <div class="curr-cell"><div class="curr-week">Wk 1–2</div><div class="curr-title">Foundation</div><div class="curr-desc">Stance, footwork, ball-handling basics, layup forms, defensive positioning and identity.</div></div>
+            <div class="curr-cell"><div class="curr-week">Wk 3–4</div><div class="curr-title">Shooting &amp; Finishing</div><div class="curr-desc">Catch-and-shoot, off-dribble, mid-range, floaters, contact finishes and free throw routine.</div></div>
+            <div class="curr-cell"><div class="curr-week">Wk 5–6</div><div class="curr-title">Offense &amp; IQ</div><div class="curr-desc">Spacing, cutting, screen usage, read-and-react offense. 3-on-3 and 4-on-4 competitive reps.</div></div>
+            <div class="curr-cell"><div class="curr-week">Wk 7–8</div><div class="curr-title">Competition</div><div class="curr-desc">Full 5-on-5 games, evaluation, individual feedback sessions and showcase day for families.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION on HOK page -->
+  <section class="section" style="background:var(--black);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Where We Train</div>
+          <div class="section-title">The Hive.</div>
+        </div>
+        <div style="max-width:380px;text-align:right;">
+          <div style="font-size:15px;color:var(--white);font-weight:300;line-height:1.8;">St. Benedict's Preparatory School<br>520 Martin Luther King Blvd<br>Newark, NJ 07102<br><span style="font-size:13px;color:var(--gray-light);">Entry via 145 William St Gate</span></div>
+          <a href="https://maps.google.com/?q=St.+Benedict's+Preparatory+School+Newark+NJ" target="_blank" style="display:inline-block;margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);">Get Directions →</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.312!2d-74.17499!3d40.74304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2531dadc1bb41%3A0x7ae5988ba7f74de3!2sSt.%20Benedict's%20Preparatory%20School!5e0!3m2!1sen!2sus!4v1741000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+        <div style="position:absolute;top:20px;right:20px;background:var(--gold);padding:4px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);">📍 The Hive</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-hok -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — CONTACT US
+═══════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+
+  <div class="photo-banner" style="height:400px;">
+    <img src="https://christophersimpson12-jpg.github.io/hoopsonking/IMG_9083.jpeg" style="filter:brightness(0.15);" alt="">
+    <div class="photo-banner-text" style="flex-direction:column;gap:12px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--gold);">We'd Love To Hear From You</div>
+      <div>Contact<br><span>Us.</span></div>
+    </div>
+  </div>
+
+  <section class="section" style="background:var(--black);">
+    <div class="section-inner">
+
+      <div class="contact-grid" style="margin-bottom:1px;">
+        <div class="contact-cell">
+          <div class="contact-label">Get In Touch</div>
+          <div class="contact-val" style="margin-bottom:32px;">Have a question about a program, session, or anything else? Fill out our interest form and a member of our staff will follow up within 24 hours.</div>
+          <a href="https://form.jotform.com/260661435793059" target="_blank" class="btn-gold">Send Us A Message →</a>
+        </div>
+        <div class="contact-cell">
+          <div class="contact-label">Location</div>
+          <div class="contact-val" style="margin-bottom:24px;">St. Benedict's Preparatory School<br>520 Martin Luther King Blvd<br>Newark, NJ 07102<br><span style="font-size:13px;color:var(--gray-light);">Entry via 145 William St Gate</span></div>
+          <div class="contact-label">Follow Us</div>
+          <div class="contact-val">
+            <a href="https://instagram.com/hoopsonking" target="_blank" style="color:var(--gold);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;">@hoopsonking</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-cell">
+          <div class="contact-label">Gray Bee Basketball Camp</div>
+          <div class="contact-val" style="margin-bottom:20px;">Summer 2026 · July 13–17 &amp; July 20–24<br>9:00am – 3:00pm · St. Benedict's Prep</div>
+          <a href="https://form.jotform.com/260665942610054" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);">Register for Camp →</a>
+        </div>
+        <div class="contact-cell">
+          <div class="contact-label">Hoops on King Academy</div>
+          <div class="contact-val" style="margin-bottom:20px;">Middle School Academy · Jr. Baller Academy<br>After-school &amp; Weekend Programming · Year-Round</div>
+          <a href="https://form.jotform.com/260665942610054" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);">Register for Academy →</a>
+        </div>
+      </div>
+
+      <div style="margin-top:64px;">
+        <div class="map-wrap">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.312!2d-74.17499!3d40.74304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2531dadc1bb41%3A0x7ae5988ba7f74de3!2sSt.%20Benedict's%20Preparatory%20School!5e0!3m2!1sen!2sus!4v1741000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+          <div style="position:absolute;top:20px;right:20px;background:var(--gold);padding:4px 14px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--black);">📍 The Hive</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- end page-contact -->
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>HOK</span> · Hoops on King</div>
+  <div class="footer-links">
+    <span class="footer-link" onclick="showPage('graybees')">Gray Bee Camp</span>
+    <span class="footer-link" onclick="showPage('hok')">HOK Academy</span>
+    <span class="footer-link" onclick="showPage('contact')">Contact</span>
+    <a href="https://instagram.com/hoopsonking" target="_blank" class="footer-link">@hoopsonking</a>
+  </div>
+  <div class="footer-copy">© 2026 Hoops on King · St. Benedict's Prep · Newark, NJ</div>
+</footer>
+
+<!-- Floating Questions Button -->
+<a href="https://form.jotform.com/260661435793059" target="_blank" class="float-btn">? Have Questions</a>
+
+<script>
+// ── PAGE NAVIGATION ──
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── HERO CAROUSEL ──
+let currentSlide = 0;
+const totalSlides = 5;
+let autoSlide;
+
+function goToSlide(n) {
+  currentSlide = n;
+  document.getElementById('hero-slides').style.transform = `translateX(-${n * 100}%)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === n));
+}
+
+function slideHero(dir) {
+  currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+  goToSlide(currentSlide);
+  resetAuto();
+}
+
+function resetAuto() {
+  clearInterval(autoSlide);
+  autoSlide = setInterval(() => slideHero(1), 5000);
+}
+
+autoSlide = setInterval(() => slideHero(1), 5000);
+
+// ── CURRICULUM TOGGLE ──
+function toggleCurr() {
+  const body = document.getElementById('curr-body');
+  const arrow = document.getElementById('curr-arrow');
+  const open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+</script>
+
+</body>
+</html>
