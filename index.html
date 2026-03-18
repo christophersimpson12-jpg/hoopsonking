@@ -287,6 +287,14 @@
     .float-btn { position: fixed; bottom: 28px; right: 28px; z-index: 900; background: #C9A84C; color: #0a0a0a; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 12px 22px; text-decoration: none; transition: opacity 0.2s; }
     .float-btn:hover { opacity: 0.85; }
 
+    .label-silver { color: #A0A0A0; }
+    .pill-silver { color: #A0A0A0; border: 1px solid rgba(160,160,160,0.35); }
+    #page-gb .tl-item::before { background: #A0A0A0; }
+    #page-gb .tl-year { color: #A0A0A0; }
+    #page-gb .edu-degree { color: #A0A0A0; }
+    #page-gb .session-date { color: #e0e0e0; }
+    #page-gb .sec-header { border-bottom-color: #252525; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
@@ -326,7 +334,7 @@
     <!-- Fixed overlay text -->
     <div class="hero-overlay">
       <div class="hero-eyebrow" style="color:rgba(255,255,255,0.6);">St. Benedict's Preparatory School · Newark, NJ</div>
-      <div class="hero-h1">Gray Bee<br><span style="color:#8B2A3E;">Hoops Camp.</span></div>
+      <div class="hero-h1" style="letter-spacing:3px;">Gray Bee<br><span style="color:#B0B0B0;-webkit-text-stroke:1px #C8C8C8;">Hoops Camp.</span></div>
       <div class="hero-sub" style="color:rgba(255,255,255,0.7);">An elite week-long basketball camp experience at The Hive — open to boys and girls across Greater Essex County.</div>
       <div class="hero-btns">
         <a href="https://form.jotform.com/260665942610054" target="_blank" class="btn-maroon">Enroll Now</a>
@@ -349,7 +357,7 @@
     <div class="inner">
       <div style="text-align:center;margin-bottom:48px;">
         <div class="label label-gray" style="display:block;">Summer 2026</div>
-        <div class="title" style="margin-bottom:12px;">Choose Your <span style="color:#8B2A3E;">Session.</span></div>
+        <div class="title" style="margin-bottom:12px;">Choose Your <span style="color:#A0A0A0;">Session.</span></div>
         <div style="font-size:14px;color:#888;font-weight:300;">Monday – Friday · 9:00am – 3:00pm · St. Benedict's Prep, Newark NJ · Boys &amp; Girls · Ages 8–18</div>
       </div>
       <div class="sessions">
@@ -368,7 +376,7 @@
       </div>
       <div style="background:#111;border:1px solid #252525;border-top:none;padding:24px 40px;text-align:center;">
         <span style="font-size:13px;color:#888;font-weight:300;">Daily Drop-In available · </span>
-        <a href="https://square.link/u/frv7yV8X" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8B2A3E;text-decoration:none;">$85/day — Register Here →</a>
+        <a href="https://square.link/u/frv7yV8X" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A0A0A0;text-decoration:none;">$85/day — Register Here →</a>
       </div>
     </div>
   </section>
@@ -376,7 +384,9 @@
   <!-- PHOTO BANNER -->
   <div class="photo-banner">
     <img src="gym5.jpg" alt="The Hive">
-    <div class="photo-banner-text">St. Benedict's Prep.<br><span style="color:#8B2A3E;">The Hive.</span></div>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,12vw,140px);color:transparent;-webkit-text-stroke:2px #f5f5f0;letter-spacing:10px;text-align:center;line-height:1;user-select:none;">THE HIVE.</div>
+    </div>
   </div>
 
   <!-- PROGRAM DIRECTOR -->
@@ -384,55 +394,39 @@
     <div class="inner">
       <div class="sec-header">
         <div>
-          <div class="label label-maroon">Meet The Coach</div>
+          <div class="label label-silver">Meet The Coach</div>
           <div class="title">Program<br>Director.</div>
         </div>
         <div style="max-width:400px;text-align:right;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#f5f5f0;">Chris Simpson <span style="color:#8B2A3E;">'10</span></div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#f5f5f0;">Chris Simpson <span style="color:#A0A0A0;">'10</span></div>
           <div style="font-size:14px;color:#888;font-weight:300;margin-top:6px;line-height:1.7;">Head Basketball Coach, St. Benedict's Prep<br>Founder, Hoops on King</div>
         </div>
       </div>
 
-      <!-- Hero photo + bio -->
-      <div class="director-grid">
+      <!-- Huddle Up photo + popup bio -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#252525;margin-bottom:56px;">
         <div class="director-photo">
-          <img src="coach1.jpg" alt="Coach Chris Simpson — Timeout">
-          <div class="photo-caption">Timeout</div>
+          <img src="coach3.jpg" alt="Coach Chris Simpson — Huddle Up" style="object-position:center 25%;">
+          <div class="photo-caption">Huddle Up</div>
         </div>
-        <div class="director-bio">
-          <div class="label label-maroon" style="margin-bottom:20px;">Background</div>
-          <p style="font-size:15px;color:#f5f5f0;font-weight:300;line-height:1.8;margin-bottom:18px;">A St. Benedict's Prep Class of '10 alumnus, Chris Simpson has spent over 15 years building one of the most well-rounded coaching resumes in the country — from the NBA to collegiate programs to elite high school basketball.</p>
-          <p style="font-size:14px;color:#888;font-weight:300;line-height:1.8;margin-bottom:18px;">Coach Simpson began at The Hive as a student manager under Dan Hurley. He went on to manage at St. John's under Steve Lavin, interned with the Brooklyn Nets under Jason Kidd during the NBA Playoffs, and built his career at IMG Academy, Wagner College, Loyola Marymount, and Dymally High School — where he won the 2020 LA City Championship and was named CIF Coach of the Year.</p>
-          <p style="font-size:14px;color:#888;font-weight:300;line-height:1.8;margin-bottom:24px;">Most recently, Coach Simpson served as Assistant Coach and Director of Scouting &amp; Video at the University of San Diego under Steve Lavin. He holds a Master's in School Counseling from Loyola Marymount University.</p>
-          <div class="pills">
-            <span class="pill pill-maroon">SBP '10 · Dan Hurley</span>
-            <span class="pill pill-maroon">Brooklyn Nets · NBA</span>
-            <span class="pill pill-maroon">2020 CIF Coach of the Year</span>
-            <span class="pill pill-maroon">M.A. · Loyola Marymount</span>
+        <div style="background:#111;padding:52px 48px;display:flex;flex-direction:column;justify-content:center;">
+          <div class="label label-silver" style="margin-bottom:16px;">Program Director</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;color:#f5f5f0;letter-spacing:2px;line-height:1;margin-bottom:8px;">Chris Simpson</div>
+          <div style="font-size:13px;color:#888;font-weight:300;margin-bottom:32px;">Head Basketball Coach, St. Benedict's Prep · Founder, Hoops on King</div>
+          <div class="pills" style="margin-bottom:36px;margin-top:0;">
+            <span class="pill pill-silver">SBP '10 · Dan Hurley</span>
+            <span class="pill pill-silver">Brooklyn Nets · NBA</span>
+            <span class="pill pill-silver">2020 CIF Coach of the Year</span>
+            <span class="pill pill-silver">M.A. · Loyola Marymount</span>
           </div>
-        </div>
-      </div>
-
-      <!-- 3 action photos -->
-      <div class="photo-strip">
-        <div class="photo-strip-cell">
-          <img src="coach2.jpg" alt="In The Zone" style="object-position:center 20%;">
-          <div class="ov"></div><div class="photo-caption">In The Zone</div>
-        </div>
-        <div class="photo-strip-cell">
-          <img src="coach3.jpg" alt="Huddle Up" style="object-position:center 25%;">
-          <div class="ov"></div><div class="photo-caption">Huddle Up</div>
-        </div>
-        <div class="photo-strip-cell">
-          <img src="coach5.jpg" alt="Sideline" style="object-position:center 20%;">
-          <div class="ov"></div><div class="photo-caption">Sideline</div>
+          <button onclick="document.getElementById('bio-modal').style.display='flex'" style="display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff;background:#333;border:1px solid #444;padding:16px 36px;cursor:pointer;width:fit-content;transition:background 0.2s;" onmouseover="this.style.background='#444'" onmouseout="this.style.background='#333'">Read Full Bio →</button>
         </div>
       </div>
 
       <!-- Timeline + Education -->
       <div class="tl-grid">
         <div>
-          <div class="label label-maroon" style="margin-bottom:28px;">Coaching Career</div>
+          <div class="label label-silver" style="margin-bottom:28px;">Coaching Career</div>
           <div class="timeline">
             <div class="tl-item">
               <div class="tl-year">2024 – Present</div>
@@ -482,16 +476,13 @@
           </div>
         </div>
         <div>
-          <div class="label label-maroon" style="margin-bottom:28px;">Education</div>
+          <div class="label label-silver" style="margin-bottom:28px;">Education</div>
           <div class="edu-cards">
             <div class="edu-card"><div class="edu-school">University of San Diego</div><div class="edu-degree">Certificate of Coaching Today's Student Athlete · 2024</div></div>
             <div class="edu-card"><div class="edu-school">Loyola Marymount University</div><div class="edu-degree">M.A. School Counseling – PPS Credential · 2018</div></div>
             <div class="edu-card"><div class="edu-school">St. John's University</div><div class="edu-degree">B.S. Sports Management · 2014</div></div>
           </div>
-          <div class="photo-strip-cell" style="height:240px;">
-            <img src="coach4.jpg" alt="Game Time" style="object-position:center 15%;">
-            <div class="ov"></div><div class="photo-caption">Game Time</div>
-          </div>
+
         </div>
       </div>
 
@@ -503,7 +494,7 @@
     <div class="inner">
       <div class="sec-header">
         <div>
-          <div class="label label-maroon">Secure Your Spot</div>
+          <div class="label label-silver">Secure Your Spot</div>
           <div class="title">Register<br>Today.</div>
         </div>
         <div style="max-width:380px;text-align:right;">
@@ -518,17 +509,17 @@
       <hr style="border:none;border-top:1px solid #252525;margin-bottom:64px;">
       <div class="sec-header" style="margin-bottom:28px;">
         <div>
-          <div class="label label-maroon">Where We Train</div>
+          <div class="label label-silver">Where We Train</div>
           <div class="title">The Hive.</div>
         </div>
         <div style="max-width:360px;text-align:right;">
           <div style="font-size:15px;color:#f5f5f0;font-weight:300;line-height:1.8;">St. Benedict's Preparatory School<br>520 Martin Luther King Blvd<br>Newark, NJ 07102<br><span style="font-size:13px;color:#888;">Entry via 145 William St Gate</span></div>
-          <a href="https://maps.google.com/?q=St.+Benedict's+Preparatory+School+Newark+NJ" target="_blank" style="display:inline-block;margin-top:14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8B2A3E;text-decoration:none;border-bottom:1px solid rgba(139,42,62,0.4);padding-bottom:2px;">Get Directions →</a>
+          <a href="https://maps.google.com/?q=St.+Benedict's+Preparatory+School+Newark+NJ" target="_blank" style="display:inline-block;margin-top:14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#A0A0A0;text-decoration:none;border-bottom:1px solid rgba(160,160,160,0.35);padding-bottom:2px;">Get Directions →</a>
         </div>
       </div>
       <div class="map-wrap">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.312!2d-74.17499!3d40.74304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2531dadc1bb41%3A0x7ae5988ba7f74de3!2sSt.%20Benedict's%20Preparatory%20School!5e0!3m2!1sen!2sus!4v1741000000000!5m2!1sen!2sus" allowfullscreen loading="lazy"></iframe>
-        <div class="map-pin" style="background:#6B1E2E;color:#fff;">📍 The Hive</div>
+        <div class="map-pin" style="background:#333;color:#ccc;">📍 The Hive</div>
       </div>
     </div>
   </section>
@@ -774,5 +765,29 @@ function toggleCurr() {
 }
 </script>
 
+
+<!-- BIO MODAL -->
+<div id="bio-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:10000;align-items:center;justify-content:center;padding:24px;">
+  <div style="max-width:720px;width:100%;background:#111;border:1px solid #252525;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 32px;border-bottom:1px solid #252525;position:sticky;top:0;background:#111;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:#f5f5f0;letter-spacing:2px;">Chris Simpson · Program Director</div>
+      <button onclick="document.getElementById('bio-modal').style.display='none'" style="background:none;border:none;color:#666;font-size:26px;cursor:pointer;line-height:1;">✕</button>
+    </div>
+    <div style="padding:36px 32px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A0A0A0;margin-bottom:20px;">Background</div>
+      <p style="font-size:15px;color:#f5f5f0;font-weight:300;line-height:1.9;margin-bottom:18px;">A St. Benedict's Prep Class of '10 alumnus, Chris Simpson has spent over 15 years building one of the most well-rounded coaching resumes in the country — from the NBA to collegiate programs to elite high school basketball.</p>
+      <p style="font-size:14px;color:#888;font-weight:300;line-height:1.9;margin-bottom:18px;">Coach Simpson began at The Hive as a student manager under Dan Hurley — learning the discipline and competitive standard that defines Benedict's basketball. He went on to manage at St. John's under Steve Lavin before interning with the Brooklyn Nets under Head Coach Jason Kidd during the NBA Playoffs, where he assisted with draft preparation and playoff scouting.</p>
+      <p style="font-size:14px;color:#888;font-weight:300;line-height:1.9;margin-bottom:18px;">He built his coaching career at IMG Academy in Bradenton, FL, Wagner College, Loyola Marymount University under Mike Dunlap, and Dymally High School in Los Angeles — where he coached the program to the 2020 LA City Championship and was named CIF Coach of the Year.</p>
+      <p style="font-size:14px;color:#888;font-weight:300;line-height:1.9;margin-bottom:32px;">Most recently, Coach Simpson served as Director of Scouting &amp; Video and then Assistant Coach at the University of San Diego under Steve Lavin. He holds a Master of Arts in School Counseling from Loyola Marymount University and a B.S. in Sports Management from St. John's University.</p>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#A0A0A0;margin-bottom:16px;">Education</div>
+      <div style="display:flex;flex-direction:column;gap:1px;background:#252525;margin-bottom:32px;">
+        <div style="background:#0a0a0a;padding:18px 24px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#f5f5f0;">University of San Diego</div><div style="font-size:12px;color:#888;margin-top:2px;">Certificate of Coaching Today's Student Athlete · 2024</div></div>
+        <div style="background:#0a0a0a;padding:18px 24px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#f5f5f0;">Loyola Marymount University</div><div style="font-size:12px;color:#888;margin-top:2px;">M.A. School Counseling – PPS Credential · 2018</div></div>
+        <div style="background:#0a0a0a;padding:18px 24px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#f5f5f0;">St. John's University</div><div style="font-size:12px;color:#888;margin-top:2px;">B.S. Sports Management · 2014</div></div>
+      </div>
+      <button onclick="document.getElementById('bio-modal').style.display='none'" style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;background:none;border:1px solid #333;padding:12px 32px;cursor:pointer;">Close</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
